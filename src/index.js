@@ -14,14 +14,18 @@ const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server, {
     cors: {
-        origin: "http://localhost:5173",
+        origin: "*",
         methods: ["GET", "POST"],
     },
 });
 app.use(cors("*"));
 
 app.use(express.json());
+
 app.use('/api/auth', authRoutes);
+app.get('/', (req, res) => {
+    res.send('Hello from Express on Vercel!');
+});
 
 io.on('connection', (socket) => {
     console.log('New client connected');
